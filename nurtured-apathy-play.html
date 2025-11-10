@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Nurtured Apathy - Lior Yaari</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        iframe {
+            box-sizing: content-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #0a192f;
+            color: #e6f1ff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Fullscreen API styles */
+        html:fullscreen,
+        html:-webkit-full-screen,
+        html:-moz-full-screen {
+            background-color: #000;
+        }
+
+        body:fullscreen,
+        body:-webkit-full-screen,
+        body:-moz-full-screen {
+            background-color: #000;
+        }
+
+        .header {
+            background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #64ffda;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            color: #64ffda;
+            text-decoration: none;
+            border: 2px solid #64ffda;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateX(-3px);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .back-icon {
+            font-size: 1.2rem;
+        }
+
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .game-info {
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .game-info h2 {
+            font-size: 2rem;
+            color: #e6f1ff;
+            margin-bottom: 1rem;
+        }
+
+        .game-info p {
+            color: #a8b2d1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .game-frame {
+            width: 100%;
+            max-width: 840px;
+            background-color: #112240;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid #233554;
+        }
+
+        .game-frame iframe {
+            display: block;
+            border-radius: 0.5rem;
+            width: 100%;
+            background-color: #000;
+        }
+
+        .game-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+            display: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fullscreen-overlay.active {
+            display: block;
+        }
+
+        .fullscreen-overlay iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw !important;
+            height: 100vh !important;
+            border: none;
+            border-radius: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .exit-fullscreen {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(100, 255, 218, 0.9);
+            color: #0a192f;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exit-fullscreen:hover {
+            background-color: #64ffda;
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.5);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(17, 34, 64, 0.95) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .play-overlay:hover {
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.85) 0%, rgba(17, 34, 64, 0.85) 100%);
+        }
+
+        .play-overlay.hidden {
+            display: none;
+        }
+
+        .play-button-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #64ffda 0%, #4dd0b1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: #0a192f;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.4);
+        }
+
+        .play-overlay:hover .play-button-large {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(100, 255, 218, 0.6);
+        }
+
+        .play-text {
+            font-size: 1.5rem;
+            color: #64ffda;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .controls-hint {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+
+        .controls-hint strong {
+            color: #64ffda;
+        }
+
+        .game-description {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background-color: #112240;
+            border-radius: 0.75rem;
+            border: 1px solid #233554;
+            line-height: 1.8;
+        }
+
+        .game-description h3 {
+            color: #64ffda;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .game-description h3:first-child {
+            margin-top: 0;
+        }
+
+        .game-description p {
+            color: #a8b2d1;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .game-description strong {
+            color: #e6f1ff;
+            font-weight: 600;
+        }
+
+        .controls-warning {
+            background-color: rgba(255, 107, 157, 0.1);
+            border-left: 3px solid #ff6b9d;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.3rem;
+            color: #e6f1ff !important;
+        }
+
+        .controls-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+
+        .controls-list li {
+            padding: 0.75rem 0;
+            color: #a8b2d1;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #233554;
+        }
+
+        .controls-list li:last-child {
+            border-bottom: none;
+        }
+
+        .controls-list li::before {
+            content: '🎮';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .controls-list li strong {
+            color: #64ffda;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .game-info h2 {
+                font-size: 1.5rem;
+            }
+
+            .game-frame {
+                padding: 1rem;
+            }
+
+            .game-container {
+                padding: 1rem;
+            }
+
+            .game-description {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .game-description h3 {
+                font-size: 1.3rem;
+            }
+
+            .game-description p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .game-frame iframe {
+                height: 300px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Nurtured Apathy - Vertical Slice</h1>
+        <a href="index.html#projects" class="back-btn">
+            <span class="back-icon">←</span>
+            Back to Portfolio
+        </a>
+    </header>
+
+    <div class="game-container">
+        <div class="game-info">
+            <h2>Play the Game</h2>
+            <p>
+                Experience the vertical slice of Nurtured Apathy. Explore the pickup system and level design 
+                created for the Game Design 3 final assignment.
+            </p>
+        </div>
+
+        <div class="game-frame">
+            <div class="game-wrapper">
+                <div class="play-overlay" id="playOverlay">
+                    <div class="play-button-large">▶</div>
+                    <div class="play-text">Click to Play</div>
+                </div>
+                <iframe 
+                    id="gameFrame"
+                    frameborder="0" 
+                    src="https://itch.io/embed-upload/14045301?color=333333" 
+                    allow="fullscreen *; microphone; camera; display-capture; gamepad" 
+                    allowfullscreen
+                    webkitallowfullscreen
+                    mozallowfullscreen
+                    msallowfullscreen
+                    width="640" 
+                    height="380"
+                    style="pointer-events: none;">
+                    <a href="https://liory7.itch.io/nurtured-apathy-vertical-slice">Play Nurtured Apathy Vertical Slice on itch.io</a>
+                </iframe>
+            </div>
+            <div class="controls-hint">
+                <strong>Tip:</strong> The game will launch in fullscreen automatically. Press ESC or click "Exit Fullscreen" to return.
+            </div>
+            
+            <div class="game-description">
+                <h3>Controls</h3>
+                <p class="controls-warning"><strong>⚠️ Requires Controller</strong> (Controls use Xbox controller naming scheme but work with correlating buttons in other controllers)</p>
+                <ul class="controls-list">
+                    <li><strong>Left Stick</strong> - Movement</li>
+                    <li><strong>A</strong> - Activating an Ability</li>
+                    <li><strong>Y</strong> - Resetting the level</li>
+                </ul>
+                
+                <h3>About the Game</h3>
+                <p>
+                    Nurtured Apathy is a side view Puzzle Platformer that focuses on tight controls and unique movement mechanics to offer challenging and creative levels for the player to explore and triumph over.
+                </p>
+                <p>
+                    The main mechanic of the game is based around the concept of <strong>emotion pickup powers</strong>—one-time use pickups that represent an ability that the player would be able to use once after picking said ability up.
+                </p>
+                <p>
+                    Each ability offers a new way to interact with the environment, letting players chain together unique movement styles in creative ways. Multiple solutions exist for every puzzle—players can experiment, fail, and retry with different approaches.
+                </p>
+                <p>
+                    Abilities are collected with a <strong>FILO (first in last out)</strong> order, which means that by careful planning the player can chain powers to get interesting results.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <button class="exit-fullscreen" id="exitFullscreen">✕ Exit Fullscreen</button>
+        <iframe 
+            id="fullscreenFrame"
+            frameborder="0" 
+            src="" 
+            allow="fullscreen *; microphone; camera; display-capture; gamepad" 
+            allowfullscreen
+            webkitallowfullscreen
+            mozallowfullscreen
+            msallowfullscreen
+            width="100%" 
+            height="100%">
+        </iframe>
+    </div>
+
+    <script>
+        const playOverlay = document.getElementById('playOverlay');
+        const gameFrame = document.getElementById('gameFrame');
+        const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+        const fullscreenFrame = document.getElementById('fullscreenFrame');
+        const exitButton = document.getElementById('exitFullscreen');
+
+        playOverlay.addEventListener('click', function() {
+            // Hide the play overlay
+            playOverlay.classList.add('hidden');
+            
+            // Enable pointer events on the iframe
+            gameFrame.style.pointerEvents = 'auto';
+            
+            // Get device screen dimensions
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            
+            // Set iframe dimensions to match screen
+            fullscreenFrame.setAttribute('width', screenWidth);
+            fullscreenFrame.setAttribute('height', screenHeight);
+            
+            // Set the source for fullscreen iframe
+            fullscreenFrame.src = `https://itch.io/embed-upload/14045301?color=000000`;
+            
+            // Show fullscreen overlay
+            fullscreenOverlay.classList.add('active');
+            
+            // Request fullscreen after a short delay
+            setTimeout(() => {
+                requestFullscreen();
+            }, 200);
+        });
+
+        function requestFullscreen() {
+            const element = fullscreenOverlay;
+            
+            if (element.requestFullscreen) {
+                element.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
+
+        exitButton.addEventListener('click', function() {
+            exitFullscreen();
+        });
+
+        function exitFullscreen() {
+            fullscreenOverlay.classList.remove('active');
+            
+            // Clear iframe after delay
+            setTimeout(() => {
+                fullscreenFrame.src = '';
+            }, 300);
+            
+            // Exit browser fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+            
+            // Reset for replay
+            setTimeout(() => {
+                playOverlay.classList.remove('hidden');
+                gameFrame.style.pointerEvents = 'none';
+            }, 300);
+        }
+
+        // Handle fullscreen change
+        ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(event => {
+            document.addEventListener(event, function() {
+                if (!document.fullscreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.mozFullScreenElement && 
+                    !document.msFullscreenElement) {
+                    if (fullscreenOverlay.classList.contains('active')) {
+                        exitFullscreen();
+                        
+                        // Stop the game by reloading the iframe
+                        const iframe = fullscreenOverlay.querySelector('iframe');
+                        if (iframe) {
+                            const src = iframe.src;
+                            iframe.src = '';
+                            iframe.src = src;
+                        }
+                    }
+                }
+            });
+        });
+
+        // Handle ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
+                e.preventDefault();
+                exitFullscreen();
+                
+                // Stop the game by reloading the iframe
+                const iframe = fullscreenOverlay.querySelector('iframe');
+                if (iframe) {
+                    const src = iframe.src;
+                    iframe.src = '';
+                    iframe.src = src;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

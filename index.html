@@ -3,31 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional CV and Portfolio - Showcasing projects, skills, and blog posts">
-    <title>My CV & Portfolio</title>
+    <meta name="description" content="Lior Yaari - Game Developer Portfolio showcasing game development projects, tools, and expertise in C#, C++, Unity, Vulkan">
+    <title>Lior Yaari - Game Developer Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <a href="#home" class="nav-brand">My Portfolio</a>
+            <div class="nav-left">
+                <button class="accessibility-toggle" id="accessibilityToggle" title="Accessibility Options">
+                    <span class="accessibility-icon">♿</span>
+                </button>
+                <a href="#home" class="nav-brand">Lior Yaari</a>
+            </div>
             <ul class="nav-menu">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#blog" class="nav-link">Blog</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#" class="nav-link resume-btn" onclick="alert('Please add your resume PDF to the root directory and update this link!'); return false;">Resume</a></li>
             </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Accessibility Menu -->
+        <div class="accessibility-menu" id="accessibilityMenu">
+            <h3>Accessibility Options</h3>
+            
+            <div class="accessibility-section">
+                <label>Text Size:</label>
+                <div class="accessibility-buttons">
+                    <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
+                    <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
+                    <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
+                </div>
+            </div>
+            
+            <div class="accessibility-section">
+                <label>Color Theme:</label>
+                <div class="accessibility-buttons">
+                    <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
+                    <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
+                    <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
+                    <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
+                    <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
-            <h1 class="hero-title">Welcome to My Portfolio</h1>
-            <p class="hero-subtitle">Developer | Problem Solver | Tech Enthusiast</p>
-            <a href="#contact" class="btn btn-primary">Get in Touch</a>
+            <h1 class="hero-title">Lior Yaari</h1>
+            <p class="hero-subtitle">Game Developer | Systems Designer | Tool Creator</p>
+            <p class="hero-description">Specializing in C#, C++, Unity, Vulkan, and game systems architecture</p>
+            <a href="#projects" class="btn btn-primary">View Projects</a>
         </div>
     </section>
 
@@ -37,11 +74,18 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <p>
-                    I'm a passionate developer with experience in building web applications and solving complex problems.
-                    I love learning new technologies and sharing my knowledge through blog posts and open-source contributions.
+                    I'm a <strong>game developer and systems designer</strong> currently studying game development, with hands-on experience creating 
+                    engaging gameplay experiences and robust game systems. My work spans from low-level graphics programming with <strong>Vulkan</strong> 
+                    to high-level game design and custom tool development in <strong>Unity</strong>.
                 </p>
                 <p>
-                    This portfolio showcases my projects, technical skills, and blog posts documenting my journey in software development.
+                    I specialize in <strong>systems architecture</strong> and <strong>gameplay programming</strong>, with a focus on creating modular, 
+                    maintainable code that empowers both players and fellow developers. My recent work includes developing a unique FILO-based 
+                    ability system for puzzle platformers and collaborating on team projects using industry-standard workflows.
+                </p>
+                <p>
+                    <strong>Currently:</strong> Seeking opportunities in game development where I can contribute to innovative gameplay systems 
+                    and continue growing as a technical designer. Available for internships, junior positions, and collaborative projects.
                 </p>
             </div>
         </div>
@@ -53,43 +97,37 @@
             <h2 class="section-title">Technical Skills</h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Frontend</h3>
+                    <h3>Programming Languages</h3>
                     <ul class="skill-list">
-                        <li>HTML5 & CSS3</li>
-                        <li>JavaScript (ES6+)</li>
-                        <li>React</li>
-                        <li>Vue.js</li>
-                        <li>Responsive Design</li>
+                        <li>C# (Advanced)</li>
+                        <li>C++ (Intermediate)</li>
+                        <li>Python (Familiar)</li>
                     </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>Backend</h3>
+                    <h3>Game Engines & Graphics</h3>
                     <ul class="skill-list">
-                        <li>Node.js</li>
-                        <li>Python</li>
-                        <li>REST APIs</li>
-                        <li>Database Design</li>
-                        <li>Server Management</li>
+                        <li>Unity (Advanced)</li>
+                        <li>Vulkan API</li>
+                        <li>Shader Programming</li>
                     </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>Tools & Technologies</h3>
+                    <h3>Design & Architecture</h3>
                     <ul class="skill-list">
-                        <li>Git & GitHub</li>
-                        <li>Docker</li>
-                        <li>CI/CD</li>
-                        <li>Agile Methodologies</li>
-                        <li>Testing Frameworks</li>
+                        <li>Game Design</li>
+                        <li>System Design</li>
+                        <li>Tool Creation</li>
+                        <li>Level Design</li>
                     </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>Other Skills</h3>
+                    <h3>Development Tools</h3>
                     <ul class="skill-list">
-                        <li>Problem Solving</li>
-                        <li>Team Collaboration</li>
-                        <li>Technical Writing</li>
-                        <li>Code Review</li>
-                        <li>Mentoring</li>
+                        <li>Git & Version Control</li>
+                        <li>Visual Studio</li>
+                        <li>Debugging & Profiling</li>
+                        <li>Agile Workflows</li>
                     </ul>
                 </div>
             </div>
@@ -100,137 +138,170 @@
     <section id="projects" class="section">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Game development projects showcasing gameplay, systems, and design</p>
             <div class="projects-grid">
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Project One</h3>
-                        <span class="project-tag">Web App</span>
+                <!-- Verdant Swarm -->
+                <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
+                    <div class="project-hero" style="background-image: url('https://img.itch.zone/aW1nLzIwNDUyNTU1LnBuZw==/original/TTBYBW.png');">
+                        <div class="project-hero-overlay">
+                            <h3>Verdant Swarm</h3>
+                            <p class="project-tagline">Environmental Restoration Experience</p>
+                            <p class="project-role"><strong>Role:</strong> Game Designer & Programmer | Technical Lead</p>
+                            <p class="project-description-preview">
+                                An <strong>environmental vibe-based game</strong> where players restore life to barren planets by spreading greenery. 
+                                Led technical implementation including custom <strong>shader programming</strong>, <strong>object pooling optimization</strong>, 
+                                and complete game flow systems while co-leading the design process.
+                            </p>
+                            <span class="expand-indicator">▼ Click to view video & play</span>
+                        </div>
                     </div>
-                    <p class="project-description">
-                        A full-stack web application built with modern technologies. Features include user authentication,
-                        real-time updates, and a responsive interface.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">MongoDB</span>
+                    
+                    <div class="project-content" style="display: none;">
+                        <button class="collapse-btn" onclick="collapsePanel(event, this.closest('.featured-project'))" title="Collapse">✕</button>
+                        <div class="project-video">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/rKFVVlMeZyc?enablejsapi=1" title="Verdant Swarm Showcase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="project-details">
+                            <p class="project-role"><strong>Role:</strong> Game Designer & Programmer | Technical Lead</p>
+                            <p class="project-description-text">
+                                <strong>Technologies:</strong> Unity, C#, Shader Programming, Git<br>
+                                <strong>Team Size:</strong> 4 developers (Antoine Foucault, Sorako-Kun, liory7, LaniesseDorian)<br>
+                                <strong>Timeline:</strong> Game Jam Project<br>
+                                <strong>Key Contributions:</strong>
+                                • Implemented custom <strong>planet greenery spreading shader</strong> for dynamic visual feedback<br>
+                                • Managed <strong>technical architecture</strong> and co-led the <strong>design process</strong><br>
+                                • Developed <strong>object pooling system</strong> for plants and trash elements to optimize performance<br>
+                                • Handled complete <strong>game flow implementation</strong> (start, end, UI systems)<br>
+                                • Debug and optimization across all game systems
+                            </p>
+                            <div class="project-actions">
+                                <a href="https://antoine-foucault.itch.io/verdant-swarm" target="_blank" class="play-btn" onclick="event.stopPropagation();">
+                                    <span class="play-icon">▶</span>
+                                    Play on itch.io
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Demo</a>
-                        <a href="#" class="project-link">GitHub</a>
-                    </div>
-                </article>
+                </div>
 
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Project Two</h3>
-                        <span class="project-tag">API</span>
+                <!-- Nurtured Apathy -->
+                <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
+                    <div class="project-hero" style="background-image: url('https://img.itch.zone/aW1hZ2UvMzY1MzYxNy8yMTc0MTAzMy5wbmc=/original/SO2K3c.png');">
+                        <div class="project-hero-overlay">
+                            <h3>Nurtured Apathy - Vertical Slice</h3>
+                            <p class="project-tagline">Puzzle Platformer with Emotion-Based Powers</p>
+                            <p class="project-role"><strong>Role:</strong> Sole Creator</p>
+                            <p class="project-description-preview">Created as my Game Design 3 final assignment. This vertical slice showcases my skills in <strong>pickup system implementation</strong> and <strong>level design</strong>, which were the primary focus areas for this project.</p>
+                            <span class="expand-indicator">▼ Click to view video & play</span>
+                        </div>
                     </div>
-                    <p class="project-description">
-                        RESTful API service designed for high performance and scalability. Includes comprehensive
-                        documentation and testing suite.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">FastAPI</span>
-                        <span class="tech-badge">PostgreSQL</span>
+                    
+                    <div class="project-content" style="display: none;">
+                        <button class="collapse-btn" onclick="collapsePanel(event, this.closest('.featured-project'))" title="Collapse">✕</button>
+                        <div class="project-video">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/MHjEf0RqJG4?enablejsapi=1" title="Nurtured Apathy Showcase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="project-details">
+                            <p class="project-role"><strong>Role:</strong> Sole Creator</p>
+                            <p class="project-description-text">
+                                <strong>Technologies:</strong> Unity, C#<br>
+                                <strong>Timeline:</strong> Game Design 3 Final Assignment<br>
+                                <strong>Key Contributions:</strong><br>
+                                • Designed and implemented unique <strong>FILO (First-In-Last-Out) ability system</strong> for strategic puzzle solving<br>
+                                • Created comprehensive <strong>pickup system</strong> for emotion-based power collection<br>
+                                • Developed <strong>level design</strong> with multiple solution paths and puzzle mechanics<br>
+                                • Implemented <strong>tight platformer controls</strong> and movement systems<br>
+                                • Complete solo project demonstrating full-cycle game development
+                            </p>
+                            <div class="project-actions">
+                                <a href="nurtured-apathy-play.html" class="play-btn" target="_blank" onclick="event.stopPropagation();">
+                                    <span class="play-icon">▶</span>
+                                    Play Game
+                                </a>
+                                <a href="https://liory7.itch.io/nurtured-apathy-vertical-slice" class="itch-btn" target="_blank" onclick="event.stopPropagation();">
+                                    <span>🎮</span>
+                                    View on itch.io
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Demo</a>
-                        <a href="#" class="project-link">GitHub</a>
-                    </div>
-                </article>
+                </div>
 
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Project Three</h3>
-                        <span class="project-tag">Tool</span>
+                <!-- Web of Lies -->
+                <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
+                    <div class="project-hero" style="background-image: url('https://img.itch.zone/aW1nLzIwNTQ0MzQxLmpwZw==/original/hJtJMJ.jpg');">
+                        <div class="project-hero-overlay">
+                            <h3>Web of Lies: Spreading Misinformation</h3>
+                            <p class="project-tagline">Co-op Interrogation Game About Keeping Your Story Straight</p>
+                            <p class="project-role"><strong>Role:</strong> Backend Systems Programmer (5-Person Team)</p>
+                            <p class="project-description-preview">
+                                A <strong>2-player co-op mystery game</strong> where suspects must coordinate their lies during a murder investigation. 
+                                Players build a fake alibi together, then face a detective's questioning—can you keep your stories straight without getting caught?
+                            </p>
+                            <span class="expand-indicator">▼ Click to view video & play</span>
+                        </div>
                     </div>
-                    <p class="project-description">
-                        Command-line tool for automating development workflows. Improves productivity and reduces
-                        repetitive tasks.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">JavaScript</span>
-                        <span class="tech-badge">CLI</span>
-                        <span class="tech-badge">NPM</span>
+                    
+                    <div class="project-content" style="display: none;">
+                        <button class="collapse-btn" onclick="collapsePanel(event, this.closest('.featured-project'))" title="Collapse">✕</button>
+                        <div class="project-video">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/nGjxlVyNoko?enablejsapi=1" title="Web of Lies Showcase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="project-details">
+                            <p class="project-description-text">
+                                <strong>Technologies:</strong> Unity, C#, Git<br>
+                                <strong>Team Size:</strong> 5 developers (Razvan Luca, Julia Weinfurtner, Lior Yaari, Lucia Sacharowitz, Jasmin H.)<br>
+                                <strong>Timeline:</strong> 48 hours (Howest's Game Jam 2025)<br>
+                                <strong>Key Contributions:</strong><br>
+                                • Backend logic for two-phase gameplay (Story Building → Questioning)<br>
+                                • Interrogation logic with answer validation and suspicion meter<br>
+                                • Subtitle system integration for dynamic dialogue<br>
+                                • Complete game state flow management and phase transitions<br>
+                                • UI integration connecting elements to game logic
+                            </p>
+                            <div class="project-actions">
+                                <a href="https://razvanluca.itch.io/web-of-lies-spreading-misinformation" target="_blank" class="play-btn" onclick="event.stopPropagation();">
+                                    <span class="play-icon">▶</span>
+                                    Play on itch.io
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Demo</a>
-                        <a href="#" class="project-link">GitHub</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog" class="section section-alt">
-        <div class="container">
-            <h2 class="section-title">Blog Posts</h2>
-            <p class="section-subtitle">Documenting project progress and sharing technical insights</p>
-            <div class="blog-grid">
-                <article class="blog-post">
-                    <div class="blog-date">November 2024</div>
-                    <h3 class="blog-title">Building a Scalable Web Application</h3>
-                    <p class="blog-excerpt">
-                        In this post, I share my experience building a scalable web application from scratch,
-                        including architecture decisions, technology choices, and lessons learned along the way.
-                    </p>
-                    <a href="#" class="blog-link">Read More →</a>
-                </article>
-
-                <article class="blog-post">
-                    <div class="blog-date">October 2024</div>
-                    <h3 class="blog-title">Optimizing API Performance</h3>
-                    <p class="blog-excerpt">
-                        A deep dive into API optimization techniques, covering caching strategies, database indexing,
-                        and query optimization to improve response times.
-                    </p>
-                    <a href="#" class="blog-link">Read More →</a>
-                </article>
-
-                <article class="blog-post">
-                    <div class="blog-date">September 2024</div>
-                    <h3 class="blog-title">Getting Started with Docker</h3>
-                    <p class="blog-excerpt">
-                        A beginner's guide to containerization with Docker. Learn how to create, manage, and deploy
-                        containerized applications with practical examples.
-                    </p>
-                    <a href="#" class="blog-link">Read More →</a>
-                </article>
-
-                <article class="blog-post">
-                    <div class="blog-date">August 2024</div>
-                    <h3 class="blog-title">Best Practices for Git Workflow</h3>
-                    <p class="blog-excerpt">
-                        Exploring effective Git workflows for team collaboration, including branching strategies,
-                        commit conventions, and code review processes.
-                    </p>
-                    <a href="#" class="blog-link">Read More →</a>
-                </article>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section">
+    <section id="contact" class="section section-alt">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
-                <p>I'm always interested in hearing about new projects and opportunities.</p>
+                <p>I'm always interested in hearing about new game development projects, collaboration opportunities, and industry connections.</p>
                 <div class="contact-links">
-                    <a href="mailto:your.email@example.com" class="contact-link">
+                    <a href="mailto:liory7@gmail.com" class="contact-link">
                         <span class="contact-icon">✉</span>
                         Email Me
                     </a>
-                    <a href="https://github.com/Lint111" class="contact-link" target="_blank">
+                    <a href="https://www.linkedin.com/in/lior-yaari-4037a11a2/" class="contact-link" target="_blank" rel="noopener">
+                        <span class="contact-icon">💼</span>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/Lint111" class="contact-link" target="_blank" rel="noopener">
                         <span class="contact-icon">⚡</span>
                         GitHub
                     </a>
-                    <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
-                        <span class="contact-icon">💼</span>
-                        LinkedIn
+                    <a href="https://liory7.itch.io" class="contact-link" target="_blank" rel="noopener">
+                        <span class="contact-icon">🎮</span>
+                        itch.io
+                    </a>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <a href="#" onclick="alert('Please add your resume PDF to the root directory and update this link!'); return false;" class="btn btn-primary">
+                        Download Resume (PDF)
                     </a>
                 </div>
             </div>
@@ -240,10 +311,173 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 My Portfolio. Built with HTML, CSS, and JavaScript.</p>
+            <p>&copy; 2025 Lior Yaari - Game Developer Portfolio</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            });
+        });
+
+        // Accessibility Menu Toggle
+        const accessibilityToggle = document.querySelector('.accessibility-toggle');
+        const accessibilityMenu = document.querySelector('.accessibility-menu');
+
+        if (accessibilityToggle && accessibilityMenu) {
+            accessibilityToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                accessibilityMenu.classList.toggle('active');
+            });
+
+            // Close accessibility menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.accessibility-menu') && !e.target.closest('.accessibility-toggle')) {
+                    accessibilityMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // Load saved preferences
+        function loadPreferences() {
+            const savedTextSize = localStorage.getItem('textSize') || 'normal';
+            const savedTheme = localStorage.getItem('colorTheme') || 'default';
+            
+            setTextSize(savedTextSize);
+            setTheme(savedTheme);
+        }
+
+        // Set Text Size
+        function setTextSize(size) {
+            const html = document.documentElement;
+            
+            // Remove all text size classes
+            html.classList.remove('text-small', 'text-large');
+            
+            // Add the selected size class (unless it's normal)
+            if (size === 'small') {
+                html.classList.add('text-small');
+            } else if (size === 'large') {
+                html.classList.add('text-large');
+            }
+            
+            // Update active state on buttons
+            document.querySelectorAll('.text-size-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.size === size) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Save preference
+            localStorage.setItem('textSize', size);
+        }
+
+        // Set Color Theme
+        function setTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('theme-high-contrast', 'theme-deuteranopia', 'theme-protanopia', 'theme-tritanopia');
+            
+            // Add the selected theme class (unless it's default)
+            if (theme !== 'default') {
+                document.body.classList.add(`theme-${theme}`);
+            }
+            
+            // Update active state on buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.theme === theme) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Save preference
+            localStorage.setItem('colorTheme', theme);
+        }
+
+        // Load preferences on page load
+        loadPreferences();
+
+        // Project card toggle
+        function toggleProjectDetails(element) {
+            const content = element.querySelector('.project-content');
+            const indicator = element.querySelector('.expand-indicator');
+            const videoIframe = element.querySelector('.project-video iframe');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                indicator.textContent = '▲ Click to collapse';
+                element.classList.add('expanded');
+                
+                // Smooth scroll to position video below navbar
+                setTimeout(() => {
+                    const videoSection = element.querySelector('.project-video');
+                    if (videoSection) {
+                        const navbarHeight = 70; // Height of fixed navbar
+                        const offset = 100; // Additional space below navbar for breathing room
+                        const videoTop = videoSection.getBoundingClientRect().top + window.scrollY;
+                        
+                        window.scrollTo({ 
+                            top: videoTop - navbarHeight - offset, 
+                            behavior: 'smooth' 
+                        });
+                    }
+                }, 100);
+            } else {
+                // Start collapse animation and scroll simultaneously
+                content.classList.add('collapsing');
+                
+                // Pause the video when collapsing
+                if (videoIframe && videoIframe.contentWindow) {
+                    videoIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                }
+                
+                // Scroll to center the hero (collapsed state) - happens simultaneously with collapse
+                const heroSection = element.querySelector('.project-hero');
+                if (heroSection) {
+                    const heroTop = heroSection.getBoundingClientRect().top + window.scrollY;
+                    const heroHeight = heroSection.offsetHeight;
+                    const viewportHeight = window.innerHeight;
+                    const navbarHeight = 70;
+                    
+                    // Center the hero in the visible viewport (accounting for navbar)
+                    const targetScroll = heroTop - ((viewportHeight - navbarHeight) / 2) + (heroHeight / 2) - navbarHeight;
+                    
+                    window.scrollTo({ 
+                        top: targetScroll, 
+                        behavior: 'smooth' 
+                    });
+                }
+                
+                // After animation completes, hide the content
+                setTimeout(() => {
+                    content.style.display = 'none';
+                    content.classList.remove('collapsing');
+                    indicator.textContent = '▼ Click to view video & play';
+                    element.classList.remove('expanded');
+                }, 300);
+            }
+        }
+        
+        // Collapse button handler
+        function collapsePanel(event, element) {
+            event.stopPropagation();
+            toggleProjectDetails(element);
+        }
+    </script>
 </body>
 </html>
