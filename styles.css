@@ -578,11 +578,11 @@ body {
 }
 
 /* Lazy loading for background images */
-.project-hero[data-bg] {
-    background-image: none !important;
+.project-hero.lazy-bg {
+    background-image: none;
 }
 
-.project-hero[data-bg].loaded {
+.project-hero.loaded {
     animation: fadeIn 0.5s ease-in;
 }
 
