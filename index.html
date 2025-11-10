@@ -23,6 +23,9 @@
     
     <title>Lior Yaari - Game Developer Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link rel="stylesheet" href="styles.css">
     
     <!-- JSON-LD Structured Data -->
@@ -140,8 +143,8 @@
                     <h3>Programming Languages</h3>
                     <ul class="skill-list">
                         <li>C# (Advanced)</li>
-                        <li>C++ (Intermediate)</li>
-                        <li>Python (Familiar)</li>
+                        <li>C++ (Advanced)</li>
+                        <li>C++23</li>
                     </ul>
                 </div>
                 <div class="skill-category">
@@ -150,6 +153,7 @@
                         <li>Unity (Advanced)</li>
                         <li>Vulkan API</li>
                         <li>Shader Programming</li>
+                        <li>ShaderGraph</li>
                     </ul>
                 </div>
                 <div class="skill-category">
@@ -234,7 +238,7 @@
             <div class="projects-grid">
                 <!-- Verdant Swarm -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('images/verdant-swarm.png');">
+                    <div class="project-hero lazy-bg" data-bg="images/verdant-swarm.png">
                         <div class="project-hero-overlay">
                             <h3>Verdant Swarm</h3>
                             <p class="project-tagline">Environmental Restoration Experience</p>
@@ -279,7 +283,7 @@
 
                 <!-- Fitness Kingdom -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('images/fitness-kingdom-icon.png');">
+                    <div class="project-hero lazy-bg" data-bg="images/fitness-kingdom-icon.png">
                         <div class="project-hero-overlay">
                             <h3>Fitness Kingdom</h3>
                             <p class="project-tagline">Mobile Fitness Game with ML Gesture Recognition</p>
@@ -318,7 +322,7 @@
 
                 <!-- Nurtured Apathy -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('images/nurtured-apathy.png');">
+                    <div class="project-hero lazy-bg" data-bg="images/nurtured-apathy.png">
                         <div class="project-hero-overlay">
                             <h3>Nurtured Apathy - Vertical Slice</h3>
                             <p class="project-tagline">Puzzle Platformer with Emotion-Based Powers</p>
@@ -362,7 +366,7 @@
 
                 <!-- Web of Lies -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('images/web-of-lies.jpg');">
+                    <div class="project-hero lazy-bg" data-bg="images/web-of-lies.jpg">
                         <div class="project-hero-overlay">
                             <h3>Web of Lies: Spreading Misinformation</h3>
                             <p class="project-tagline">Co-op Interrogation Game About Keeping Your Story Straight</p>
@@ -447,7 +451,7 @@
                         <span class="contact-icon">✉</span>
                         Email Me
                     </a>
-                    <a href="https://www.linkedin.com/in/lior-yaari-4037a11a2/" class="contact-link" target="_blank" rel="noopener">
+                    <a href="https://www.linkedin.com/in/lior-yaari-671629265/" class="contact-link" target="_blank" rel="noopener">
                         <span class="contact-icon">💼</span>
                         LinkedIn
                     </a>
@@ -640,6 +644,27 @@
             event.stopPropagation();
             toggleProjectDetails(element);
         }
+
+        // Lazy load background images
+        const lazyBackgrounds = document.querySelectorAll('.lazy-bg');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const bgUrl = element.getAttribute('data-bg');
+                    if (bgUrl) {
+                        element.style.backgroundImage = `url('${bgUrl}')`;
+                        element.classList.add('loaded');
+                        element.classList.remove('lazy-bg');
+                        observer.unobserve(element);
+                    }
+                }
+            });
+        }, {
+            rootMargin: '50px' // Start loading slightly before element comes into view
+        });
+
+        lazyBackgrounds.forEach(bg => imageObserver.observe(bg));
     </script>
 </body>
 </html>

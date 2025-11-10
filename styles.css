@@ -577,6 +577,20 @@ body {
     background-repeat: no-repeat;
 }
 
+/* Lazy loading for background images */
+.project-hero[data-bg] {
+    background-image: none !important;
+}
+
+.project-hero[data-bg].loaded {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .project-hero-overlay {
     position: absolute;
     bottom: 0;
