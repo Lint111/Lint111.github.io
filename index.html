@@ -4,9 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Lior Yaari - Game Developer Portfolio showcasing game development projects, tools, and expertise in C#, C++, Unity, Vulkan">
+    <meta name="keywords" content="game developer, graphics programmer, vulkan, unity, c++, c#, game engine, technical art">
+    <meta name="author" content="Lior Yaari">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lint111.github.io/">
+    <meta property="og:title" content="Lior Yaari - Game Developer Portfolio">
+    <meta property="og:description" content="Independent game developer specializing in graphics programming, engine architecture, and gameplay systems. Check out my projects including VIXEN Vulkan engine and game jam titles.">
+    <meta property="og:image" content="https://lint111.github.io/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://lint111.github.io/">
+    <meta property="twitter:title" content="Lior Yaari - Game Developer Portfolio">
+    <meta property="twitter:description" content="Independent game developer specializing in graphics programming, engine architecture, and gameplay systems. Check out my projects including VIXEN Vulkan engine and game jam titles.">
+    <meta property="twitter:image" content="https://lint111.github.io/og-image.jpg">
+    
     <title>Lior Yaari - Game Developer Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Lior Yaari",
+      "url": "https://lint111.github.io/",
+      "jobTitle": "Game Developer",
+      "description": "Independent game developer and graphics programmer specializing in engine architecture and gameplay systems",
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Howest University of Applied Sciences"
+      },
+      "knowsAbout": ["Game Development", "Graphics Programming", "Vulkan", "Unity", "C++", "C#", "Game Engine Architecture"],
+      "sameAs": [
+        "https://github.com/Lint111",
+        "https://lint111.itch.io/",
+        "https://www.linkedin.com/in/lior-yaari-671629265/"
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -22,6 +61,7 @@
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="lior-yaari-resume.pdf" class="nav-link resume-btn" download>Resume</a></li>
             </ul>
@@ -194,7 +234,7 @@
             <div class="projects-grid">
                 <!-- Verdant Swarm -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('https://img.itch.zone/aW1nLzIwNDUyNTU1LnBuZw==/original/TTBYBW.png');">
+                    <div class="project-hero" style="background-image: url('images/verdant-swarm.png');">
                         <div class="project-hero-overlay">
                             <h3>Verdant Swarm</h3>
                             <p class="project-tagline">Environmental Restoration Experience</p>
@@ -239,7 +279,7 @@
 
                 <!-- Fitness Kingdom -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('fitness-kingdom-icon.png');">
+                    <div class="project-hero" style="background-image: url('images/fitness-kingdom-icon.png');">
                         <div class="project-hero-overlay">
                             <h3>Fitness Kingdom</h3>
                             <p class="project-tagline">Mobile Fitness Game with ML Gesture Recognition</p>
@@ -278,7 +318,7 @@
 
                 <!-- Nurtured Apathy -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('https://img.itch.zone/aW1hZ2UvMzY1MzYxNy8yMTc0MTAzMy5wbmc=/original/SO2K3c.png');">
+                    <div class="project-hero" style="background-image: url('images/nurtured-apathy.png');">
                         <div class="project-hero-overlay">
                             <h3>Nurtured Apathy - Vertical Slice</h3>
                             <p class="project-tagline">Puzzle Platformer with Emotion-Based Powers</p>
@@ -322,7 +362,7 @@
 
                 <!-- Web of Lies -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
-                    <div class="project-hero" style="background-image: url('https://img.itch.zone/aW1nLzIwNTQ0MzQxLmpwZw==/original/hJtJMJ.jpg');">
+                    <div class="project-hero" style="background-image: url('images/web-of-lies.jpg');">
                         <div class="project-hero-overlay">
                             <h3>Web of Lies: Spreading Misinformation</h3>
                             <p class="project-tagline">Co-op Interrogation Game About Keeping Your Story Straight</p>
@@ -366,8 +406,38 @@
         </div>
     </section>
 
+    <!-- Education Section -->
+    <section id="education" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="education-content">
+                <div class="education-item">
+                    <div class="education-header">
+                        <h3>Howest University of Applied Sciences</h3>
+                        <span class="education-timeline">2022 - Present</span>
+                    </div>
+                    <p class="education-degree"><strong>Bachelor of Science in Digital Arts & Entertainment</strong></p>
+                    <p class="education-focus">Specialization: Independent Game Production (IGP)</p>
+                    <div class="education-details">
+                        <h4>Relevant Coursework & Skills:</h4>
+                        <ul class="education-coursework">
+                            <li><strong>Graphics Programming:</strong> Advanced rendering techniques, shader development, and real-time graphics optimization</li>
+                            <li><strong>Game Engine Architecture:</strong> Systems design, memory management, and performance optimization</li>
+                            <li><strong>Gameplay Programming:</strong> Mechanics implementation, AI systems, and player interaction design</li>
+                            <li><strong>Technical Art:</strong> Shader programming, VFX systems, and procedural generation</li>
+                            <li><strong>Project Management:</strong> Agile development, version control (Git/Perforce), and team collaboration</li>
+                        </ul>
+                        <p class="education-note">
+                            <em>Self-taught Vulkan API and modern graphics engine architecture through independent research alongside coursework.</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
-    <section id="contact" class="section section-alt">
+    <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
@@ -403,6 +473,7 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Lior Yaari - Game Developer Portfolio</p>
+            <p class="footer-tagline">Built with ❤️ and Vulkan • She/Her</p>
         </div>
     </footer>
 

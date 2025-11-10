@@ -1057,6 +1057,102 @@ body {
     font-size: 1.5rem;
 }
 
+/* Education Section */
+.education-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.education-item {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+.education-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.education-header h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.education-timeline {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.education-degree {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.education-focus {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.education-details h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.education-coursework {
+    list-style: none;
+    padding: 0;
+}
+
+.education-coursework li {
+    color: var(--text-secondary);
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.education-coursework li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.education-coursework strong {
+    color: var(--text-color);
+}
+
+.education-note {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-tertiary);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.education-note em {
+    color: var(--primary-color);
+}
+
 /* Footer */
 .footer {
     background-color: var(--bg-secondary);
@@ -1068,6 +1164,13 @@ body {
 
 .footer p {
     font-size: 0.95rem;
+    margin: 0.25rem 0;
+}
+
+.footer-tagline {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
 }
 
 /* Responsive Design */
