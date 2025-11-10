@@ -23,7 +23,7 @@
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#" class="nav-link resume-btn" onclick="alert('Please add your resume PDF to the root directory and update this link!'); return false;">Resume</a></li>
+                <li><a href="lior-yaari-resume.pdf" class="nav-link resume-btn" download>Resume</a></li>
             </ul>
             <button class="mobile-menu-toggle" id="mobileMenuToggle">
                 <span></span>
@@ -124,10 +124,9 @@
                 <div class="skill-category">
                     <h3>Development Tools</h3>
                     <ul class="skill-list">
-                        <li>Git & Version Control</li>
-                        <li>Visual Studio</li>
+                        <li>Git & Perforce</li>
+                        <li>CMake</li>
                         <li>Debugging & Profiling</li>
-                        <li>Agile Workflows</li>
                     </ul>
                 </div>
             </div>
@@ -138,7 +137,60 @@
     <section id="projects" class="section">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">Game development projects showcasing gameplay, systems, and design</p>
+            <p class="section-subtitle">Game development and engine programming showcasing systems, graphics, and design</p>
+            
+            <!-- Technical Projects Subsection -->
+            <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.5rem;">Engine Development</h3>
+            <div class="projects-grid">
+                <!-- VIXEN Engine -->
+                <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
+                    <div class="project-hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);">
+                        <div class="project-hero-overlay">
+                            <h3>VIXEN - Vulkan Render Graph Engine</h3>
+                            <p class="project-tagline">Production-Quality Graphics Engine</p>
+                            <p class="project-role"><strong>Role:</strong> Solo Creator & Researcher</p>
+                            <p class="project-description-preview">
+                                <strong>Production-quality Vulkan engine</strong> featuring graph-based rendering architecture with compile-time type safety. 
+                                Includes <strong>19+ specialized nodes</strong>, <strong>SPIRV reflection system</strong>, and <strong>9-cacher persistent storage</strong>. 
+                                Currently being extended for <strong>voxel ray tracing research</strong> targeting academic publication.
+                            </p>
+                            <span class="expand-indicator">▼ Click to view details</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-content" style="display: none;">
+                        <button class="collapse-btn" onclick="collapsePanel(event, this.closest('.featured-project'))" title="Collapse">✕</button>
+                        
+                        <div class="project-details">
+                            <p class="project-role"><strong>Role:</strong> Solo Creator & Researcher</p>
+                            <p class="project-description-text">
+                                <strong>Technologies:</strong> C++23, Vulkan 1.4, SPIRV-Reflect, CMake, GoogleTest<br>
+                                <strong>Timeline:</strong> 2024-2025 (Ongoing)<br>
+                                <strong>Status:</strong> Phase G Complete, Research Phase H in Progress<br>
+                                <strong>Key Achievements:</strong><br>
+                                • Architected <strong>node-based render graph system</strong> with 19+ specialized nodes and DAG topology<br>
+                                • Implemented <strong>compile-time type safety</strong> using C++23 templates and variant-based resource system<br>
+                                • Developed <strong>automatic SPIRV reflection</strong> for descriptor layout generation and type-safe UBO structs<br>
+                                • Built <strong>persistent cache system</strong> (9 cachers) with async save/load and content-hash deduplication<br>
+                                • Created <strong>comprehensive testing framework</strong> (40% coverage, 10 GoogleTest suites, VS Code integration)<br>
+                                • Designed <strong>event-driven invalidation</strong> for automatic resource rebuilding and dependency management<br>
+                                • Self-studied <strong>Vulkan API</strong> and <strong>game engine architecture</strong> patterns from industry research<br>
+                                <br>
+                                <strong>Current Research Focus:</strong> Comparative analysis of 4 voxel ray tracing pipelines (compute shader, fragment shader, hardware RT, hybrid) across 180 configurations for academic publication (May 2026).
+                            </p>
+                            <div class="project-actions">
+                                <a href="https://github.com/Lint111/VBVS--VIXEN" target="_blank" class="play-btn" onclick="event.stopPropagation();">
+                                    <span class="play-icon">⚡</span>
+                                    View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Development Subsection -->
+            <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; color: var(--primary-color); font-size: 1.5rem;">Game Development</h3>
             <div class="projects-grid">
                 <!-- Verdant Swarm -->
                 <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
@@ -181,6 +233,45 @@
                                     Play on itch.io
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fitness Kingdom -->
+                <div class="project-embed featured-project" onclick="toggleProjectDetails(this)">
+                    <div class="project-hero" style="background-image: url('fitness-kingdom-icon.png');">
+                        <div class="project-hero-overlay">
+                            <h3>Fitness Kingdom</h3>
+                            <p class="project-tagline">Mobile Fitness Game with ML Gesture Recognition</p>
+                            <p class="project-role"><strong>Role:</strong> Programmer</p>
+                            <p class="project-description-preview">
+                                Mobile fitness game developed for <strong>Howest Sport Innovation Campus</strong> combining <strong>MediaPipe machine learning</strong> 
+                                for gesture tracking with city-building mechanics. Created the complete <strong>city-building system</strong> and served as general problem solver across the project.
+                            </p>
+                            <span class="expand-indicator">▼ Click to view video</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-content" style="display: none;">
+                        <button class="collapse-btn" onclick="collapsePanel(event, this.closest('.featured-project'))" title="Collapse">✕</button>
+                        <div class="project-video">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/CbLditx_G1Y?enablejsapi=1" title="Fitness Kingdom Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        
+                        <div class="project-details">
+                            <p class="project-role"><strong>Role:</strong> Programmer</p>
+                            <p class="project-description-text">
+                                <strong>Technologies:</strong> Unity, C#, MediaPipe (Machine Learning), Mobile Development<br>
+                                <strong>Team Size:</strong> 5 developers<br>
+                                <strong>Timeline:</strong> 4-month Client Project (2024)<br>
+                                <strong>Client:</strong> Howest Sport Innovation Campus<br>
+                                <strong>Key Contributions:</strong><br>
+                                • Designed and implemented complete <strong>city-building system</strong> including placement, upgrades, and progression<br>
+                                • Collaborated on <strong>MediaPipe machine learning integration</strong> for real-time gesture tracking through camera<br>
+                                • Developed <strong>challenge validation</strong> and <strong>reward systems</strong> connecting fitness to city growth<br>
+                                • Served as <strong>general problem solver</strong> supporting team across multiple systems<br>
+                                • Worked directly with client to iterate on features and meet requirements
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -300,7 +391,7 @@
                     </a>
                 </div>
                 <div style="margin-top: 2rem;">
-                    <a href="#" onclick="alert('Please add your resume PDF to the root directory and update this link!'); return false;" class="btn btn-primary">
+                    <a href="lior-yaari-resume.pdf" class="btn btn-primary" download>
                         Download Resume (PDF)
                     </a>
                 </div>

@@ -1,0 +1,44 @@
+name: Generate Resume PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lior-yaari-resume.md'
+  workflow_dispatch:
+
+jobs:
+  generate-pdf:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+
+      - name: Convert Markdown to PDF
+        run: |
+          pandoc lior-yaari-resume.md \
+            -o lior-yaari-resume.pdf \
+            --pdf-engine=pdflatex \
+            -V geometry:margin=0.75in \
+            -V fontsize=11pt \
+            -V colorlinks=true \
+            -V linkcolor=blue \
+            -V urlcolor=blue \
+            --highlight-style=tango
+
+      - name: Commit PDF back to repository
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add lior-yaari-resume.pdf
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generate resume PDF from Markdown"
+          git push
