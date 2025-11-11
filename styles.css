@@ -1087,6 +1087,10 @@ body {
     transform: scale(1.1);
 }
 
+.btn:hover .contact-icon svg {
+    transform: scale(1.1);
+}
+
 /* Education Section */
 .education-content {
     max-width: 900px;
