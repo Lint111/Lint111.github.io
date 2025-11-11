@@ -364,7 +364,7 @@ body {
 .btn-primary {
     background-color: transparent;
     color: var(--primary-color);
-    animation: fadeInUp 0.8s ease-out 0.4s both;
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
 }
 
 .btn-primary:hover {
