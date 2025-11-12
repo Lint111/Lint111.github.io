@@ -1,0 +1,135 @@
+## Preface
+
+I started studying Vulkan out of personal interest. I've always wanted to create a voxel engine, but in the past, I would research endlessly without actually building anything.
+
+I began during summer break by following the book "Learning Vulkan" by Parminder Singh—a great introduction to Vulkan, even if it takes 400+ pages just to render a cube.
+
+When I finished the book, I had a basic monolithic Vulkan renderer that did its job well. However, whenever I wanted to change what it was doing, I had to modify a lot of code inside already-finished classes, making it hard to extend and maintain.
+
+So I started refactoring the monolithic structure into a more modular one—a graph-based format where every node represents a single focused task in the long chain of rendering a frame.
+
+I began by working towards feature parity with the monolithic renderer, implementing nodes for swapchain creation, window creation, command buffer recording, render pass creation, pipeline creation, and so on.
+
+After many refactors and iterations, I reached this structure:
+
+For each node, there exists a config header whose job is to create the structure of that node's data flow:
+- Input and Output Slots
+- Each slot's name and type
+- Slot metadata such as optional/nullable status, Role (dependency, execute time, output), and access type (read, write, read-write), etc.
+- Binding data that connects said name to the slot indexes
+- Parameter names
+- Static checks to verify the structure is correct at compile time
+
+Through the use of macros, these configs become true header files that go through preprocessing, which greatly improves the ergonomics of creating config files. Instead of writing hundreds of lines of boilerplate, the macros expand to generate all the necessary type definitions, binding structures, and validation code automatically.
+
+Here's a simplified example of a SwapChain node configuration:
+
+```cpp
+// Define the structure at compile time
+CONSTEXPR_NODE_CONFIG(SwapChainNodeConfig, 6, 2, SlotArrayMode::Single) {
+    // Input slots with metadata
+    INPUT_SLOT(INSTANCE, VkInstance, 0,
+        SlotNullability::Required,
+        SlotRole::Dependency,
+        SlotMutability::ReadOnly);
+    
+    INPUT_SLOT(DEVICE, VulkanDevicePtr, 1,
+        SlotNullability::Required,
+        SlotRole::Dependency,
+        SlotMutability::ReadOnly);
+    
+    INPUT_SLOT(WIDTH, uint32_t, 2,
+        SlotNullability::Required,
+        SlotRole::Dependency,
+        SlotMutability::ReadOnly);
+    
+    // ... more inputs
+    
+    // Output slots
+    OUTPUT_SLOT(SWAPCHAIN_HANDLE, VkSwapchainKHR, 0,
+        SlotNullability::Required,
+        SlotMutability::WriteOnly);
+    
+    OUTPUT_SLOT(IMAGE_INDEX, uint32_t, 1,
+        SlotNullability::Required,
+        SlotMutability::WriteOnly);
+    
+    // Compile-time validations
+    static_assert(INPUT_COUNT == 6, "Input count mismatch");
+    static_assert(OUTPUT_COUNT == 2, "Output count mismatch");
+    static_assert(std::is_same_v<INSTANCE_Slot::Type, VkInstance>);
+    static_assert(!INSTANCE_Slot::nullable, "INSTANCE is required");
+};
+```
+
+By predefining the structure of each node at compile time, we get compile-time type safety, clear data flow, and a well-defined interface of operations.
+
+Then we have the actual node implementation, whose job is to implement the logic of the node using the data flow structure.
+
+By constructing a graph of these nodes, we can build a DAG (Directed Acyclic Graph) of rendering operations, where each node can be independently developed, tested, and maintained.
+
+For example, by checking slot connections at graph compile time (not actual C++ compile time, but during the graph assembly process), we create an execution order for the nodes according to connections between them—inputs must happen before the outputs that depend on them.
+
+By using the slot Role metadata, we can determine which nodes are dependencies of other nodes, allowing us to create a cleanup graph that is the reverse of the execution graph. This enables us to properly destroy only the dependent resources in the correct order.
+
+When I reached feature parity with the monolithic renderer, I had already invested significant time into this new structure. So I decided to transition from a learning project into a tool for my graduation research project.
+
+Using the modular structure and the ability to simply switch nodes to compare different render pipeline configurations, I can conduct a comparative study of how different Vulkan rendering pipelines affect the performance of similar rendering tasks.
+
+Specifically, my research focuses on comparing how different Vulkan pipeline implementations of the same voxel rendering technique perform. I'm investigating compute pipelines, graphics pipelines (running the algorithm in the fragment shader), ray tracing (RTX), mesh shaders, and other approaches. This comparative study will help understand the performance characteristics and capabilities of each pipeline type when applied to voxel rendering in the same environment.
+
+So I assembled a project plan and got to work. With every new step toward my research goals, new architectural needs arose.
+
+## Shader Management
+
+A good rendering framework enables quick iteration of shaders. This requires ease of loading, compiling, resource gathering, descriptor creation, and binding. With every step, it became clear that a manual approach wasn't feasible for a proper development environment.
+
+So I created a static library focused on shader handling with the following responsibilities:
+- Loading shader source code from files
+- Compiling shaders into SPIR-V format
+- Reflecting shader resources to gather information about inputs, outputs, uniforms, and other resources
+- Creating SDIs (Shader Descriptor Interfaces) and a naming file that maps resource names to binding points
+- Assembling shader data bundles and passing them to a consumer, such as a render node
+
+I kept actual Vulkan API calls out of this library to keep it modular and focused on shader management, enabling easier testing and potential reuse in other projects.
+
+So now I have automatic shader metadata, but we still need to create shader modules, descriptor sets, and pipeline layouts, gather resources, and bind them at draw time.
+
+And all of this process needs to be generic enough to handle any kind of shader we can throw at it.
+
+This led me to a new problem: how do we handle a node with an unknown number of slots at compile time?
+
+I decided to implement a variadic design—a node that "trusts the user" to connect an arbitrary number of slots and will throw errors at runtime if something is wrong (in our case, "compile time" refers to the early graph assembly stage). This way, we can have a generic shader node that can handle any shader configuration.
+
+But this led to another issue: graph flow.
+
+At the time, the render graph construction flow looked like this:
+- Node 1 setup
+- Node 1 compile
+- Node 2 setup
+- Node 2 compile
+- ...
+- Node n setup
+- Node n compile
+
+As a result, we couldn't know for sure if any prior slots were already populated before compiling a node, leading to issues where we'd assume a variadic slot was populated when it wasn't.
+
+To solve this issue, I had to refactor the graph assembly flow into two distinct passes:
+- **Setup Pass**: All nodes are set up, slots are connected, and data flow is established
+- **Compile Pass**: All nodes are compiled, now with the guarantee that all prior slots are populated and ready for use
+
+Additionally, I added event hooks for different stages of the graph assembly lifecycle, enabling easy access to different stages of the process for logging, debugging, and custom operations. On the node side, I added event hooks before and after each lifecycle stage, enabling fine-grained control over node operations.
+
+So every time we reach a node's precompile hook, we know that its dependencies are already compiled and ready for use. We can populate our variadic slots with actual data from prior nodes, making them accessible in the compile stage.
+
+This new structure allowed me to create a generic "Descriptor Resource Gatherer" node that, according to a shader data bundle, can accept any number of resources needed for binding and create the needed descriptor sets and layouts for binding at draw time—while keeping type safety and clear data flow.
+
+After I finished implementing this new structure, I reached the first milestone of truly generic compute shader handling. I can now swap between different compute shaders with different resource needs just by changing node connections, without modifying any node code.
+
+## Next Steps
+
+Next steps include implementing a generic graphics pipeline node that can handle any vertex/fragment shader pair, along with other pipeline implementations to complete the testing suite required for my research project.
+
+## Conclusion
+
+In conclusion, creating a render graph framework is an architectural challenge that's teaching me a lot about modular design, data flow management, and Vulkan rendering pipelines. I'm looking forward to continuing this journey and seeing where it leads me in my research and on the path toward a functional voxel engine.

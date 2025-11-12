@@ -253,13 +253,22 @@
                     I started studying Vulkan out of personal interest. I've always wanted to create a voxel engine, but in the past, I would research endlessly without actually building anything. This time, I decided things would be different.
                 </p>
 
-                <p>
-                    I began during summer break by following the book "Learning Vulkan" by Parminder Singh—a great introduction to Vulkan, even if it takes 400+ pages just to render a cube. The verbosity of Vulkan is intimidating at first, but it forces you to understand exactly what's happening at every step of the rendering pipeline.
-                </p>
+                <div style="display: flex; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;">
+                    <div style="flex: 0 0 200px;">
+                        <a href="https://www.amazon.com/Learning-Vulkan-Parminder-Singh/dp/1786469804" target="_blank" rel="noopener noreferrer">
+                            <img src="https://m.media-amazon.com/images/I/61HwNgNuYbL._SL1360_.jpg" alt="Learning Vulkan Book Cover" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                        </a>
+                    </div>
+                    <div style="flex: 1; min-width: 300px;">
+                        <p>
+                            I began during summer break by following the book <a href="https://www.amazon.com/Learning-Vulkan-Parminder-Singh/dp/1786469804" target="_blank" rel="noopener noreferrer" style="color: #4a90e2; text-decoration: none;"><strong>Learning Vulkan</strong></a> by Parminder Singh—a great introduction to Vulkan, even if it takes 400+ pages just to render a cube. The verbosity of Vulkan is intimidating at first, but it forces you to understand exactly what's happening at every step of the rendering pipeline.
+                        </p>
 
-                <p>
-                    When I finished the book, I had a basic monolithic Vulkan renderer that did its job well. However, whenever I wanted to change what it was doing, I had to modify a lot of code inside already-finished classes, making it hard to extend and maintain. This is when I realized I needed a better architecture.
-                </p>
+                        <p>
+                            When I finished the book, I had a basic monolithic Vulkan renderer that did its job well. However, whenever I wanted to change what it was doing, I had to modify a lot of code inside already-finished classes, making it hard to extend and maintain. This is when I realized I needed a better architecture.
+                        </p>
+                    </div>
+                </div>
 
                 <h2>The Refactoring Journey</h2>
 

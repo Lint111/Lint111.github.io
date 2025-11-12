@@ -60,7 +60,7 @@ function filterAndRenderPosts() {
     if (searchQuery.trim()) {
         filteredPosts = filteredPosts.filter(post =>
             post.title.toLowerCase().includes(searchQuery) ||
-            post.description.toLowerCase().includes(searchQuery) ||
+            post.excerpt.toLowerCase().includes(searchQuery) ||
             post.tags.some(tag => tag.toLowerCase().includes(searchQuery))
         );
     }
@@ -110,7 +110,7 @@ function renderBlogPosts(posts) {
 function createBlogCard(post) {
     const card = document.createElement('div');
     card.className = 'blog-card';
-    card.onclick = () => window.location.href = post.content;
+    card.onclick = () => window.location.href = post.url;
     
     card.innerHTML = `
         ${post.image ? `
@@ -125,7 +125,7 @@ function createBlogCard(post) {
                 ${post.readTime ? `<span>${post.readTime}</span>` : ''}
             </div>
             <h3 class="blog-card-title">${post.title}</h3>
-            <p class="blog-card-description">${post.description}</p>
+            <p class="blog-card-description">${post.excerpt}</p>
             <div class="blog-card-tags">
                 ${post.tags.map(tag => `<span class="blog-card-tag">${tag}</span>`).join('')}
             </div>
