@@ -22,6 +22,7 @@
     <meta property="twitter:image" content="https://lint111.github.io/images/nurtured-apathy.png">
     
     <title>Play Nurtured Apathy - Lior Yaari</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" href="favicon.ico">
@@ -46,8 +47,8 @@
 
         body {
             font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #0a192f;
-            color: #e6f1ff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -78,7 +79,7 @@
 
         .header h1 {
             font-size: 1.5rem;
-            color: #64ffda;
+            color: var(--primary-color);
             font-weight: 600;
         }
 
@@ -88,9 +89,9 @@
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
             background-color: transparent;
-            color: #64ffda;
+            color: var(--primary-color);
             text-decoration: none;
-            border: 2px solid #64ffda;
+            border: 2px solid var(--primary-color);
             border-radius: 0.5rem;
             font-weight: 600;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -124,12 +125,12 @@
 
         .game-info h2 {
             font-size: 2rem;
-            color: #e6f1ff;
+            color: var(--text-color);
             margin-bottom: 1rem;
         }
 
         .game-info p {
-            color: #a8b2d1;
+            color: var(--text-secondary);
             font-size: 1.1rem;
             line-height: 1.6;
         }
@@ -137,11 +138,11 @@
         .game-frame {
             width: 100%;
             max-width: 840px;
-            background-color: #112240;
+            background-color: var(--bg-secondary);
             padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 1px solid #233554;
+            border: 1px solid var(--border-color);
         }
 
         .game-frame iframe {
@@ -192,7 +193,7 @@
             right: 20px;
             padding: 0.75rem 1.5rem;
             background-color: rgba(100, 255, 218, 0.9);
-            color: #0a192f;
+            color: var(--bg-color);
             border: none;
             border-radius: 0.5rem;
             font-weight: 700;
@@ -205,7 +206,7 @@
         }
 
         .exit-fullscreen:hover {
-            background-color: #64ffda;
+            background-color: var(--primary-color);
             transform: scale(1.05);
             box-shadow: 0 5px 20px rgba(100, 255, 218, 0.5);
         }
@@ -238,12 +239,12 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #64ffda 0%, #4dd0b1 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #4dd0b1 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 3rem;
-            color: #0a192f;
+            color: var(--bg-color);
             margin-bottom: 1rem;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(100, 255, 218, 0.4);
@@ -256,7 +257,7 @@
 
         .play-text {
             font-size: 1.5rem;
-            color: #64ffda;
+            color: var(--primary-color);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -265,25 +266,25 @@
         .controls-hint {
             margin-top: 1.5rem;
             text-align: center;
-            color: #8892b0;
+            color: var(--secondary-color);
             font-size: 0.9rem;
         }
 
         .controls-hint strong {
-            color: #64ffda;
+            color: var(--primary-color);
         }
 
         .game-description {
             margin-top: 2.5rem;
             padding: 2rem;
-            background-color: #112240;
+            background-color: var(--bg-secondary);
             border-radius: 0.75rem;
-            border: 1px solid #233554;
+            border: 1px solid var(--border-color);
             line-height: 1.8;
         }
 
         .game-description h3 {
-            color: #64ffda;
+            color: var(--primary-color);
             font-size: 1.5rem;
             margin-bottom: 1rem;
             margin-top: 1.5rem;
@@ -294,23 +295,23 @@
         }
 
         .game-description p {
-            color: #a8b2d1;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
             font-size: 1.05rem;
         }
 
         .game-description strong {
-            color: #e6f1ff;
+            color: var(--text-color);
             font-weight: 600;
         }
 
         .controls-warning {
             background-color: rgba(255, 107, 157, 0.1);
-            border-left: 3px solid #ff6b9d;
+            border-left: 3px solid var(--accent-color);
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 0.3rem;
-            color: #e6f1ff !important;
+            color: var(--text-color) !important;
         }
 
         .controls-list {
@@ -321,11 +322,11 @@
 
         .controls-list li {
             padding: 0.75rem 0;
-            color: #a8b2d1;
+            color: var(--text-secondary);
             position: relative;
             padding-left: 2rem;
             font-size: 1.05rem;
-            border-bottom: 1px solid #233554;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .controls-list li:last-child {
@@ -340,7 +341,7 @@
         }
 
         .controls-list li strong {
-            color: #64ffda;
+            color: var(--primary-color);
             min-width: 100px;
             display: inline-block;
         }
@@ -392,7 +393,38 @@
 </head>
 <body>
     <header class="header">
-        <h1>Nurtured Apathy - Vertical Slice</h1>
+        <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+            <button class="accessibility-toggle" id="accessibilityToggle" title="Accessibility Options">
+                <span class="accessibility-icon">♿</span>
+            </button>
+            
+            <!-- Accessibility Menu -->
+            <div class="accessibility-menu" id="accessibilityMenu">
+                <h3>Accessibility Options</h3>
+                
+                <div class="accessibility-section">
+                    <label>Text Size:</label>
+                    <div class="accessibility-buttons">
+                        <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
+                        <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
+                        <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
+                    </div>
+                </div>
+                
+                <div class="accessibility-section">
+                    <label>Color Theme:</label>
+                    <div class="accessibility-buttons">
+                        <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
+                        <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
+                        <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
+                        <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
+                        <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h1>Nurtured Apathy - Vertical Slice</h1>
+        </div>
         <a href="index.html#projects" class="back-btn">
             <span class="back-icon">←</span>
             Back to Portfolio
@@ -475,6 +507,7 @@
         </iframe>
     </div>
 
+    <script src="script.js"></script>
     <script>
         const playOverlay = document.getElementById('playOverlay');
         const gameFrame = document.getElementById('gameFrame');

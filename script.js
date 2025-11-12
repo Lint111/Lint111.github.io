@@ -1,5 +1,5 @@
-// Smooth scrolling for navigation links
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize all event listeners and functionality
+function initializeScripts() {
     // Load accessibility preferences
     loadPreferences();
 
@@ -8,14 +8,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const accessibilityMenu = document.getElementById('accessibilityMenu');
     
     if (accessibilityToggle && accessibilityMenu) {
-        accessibilityToggle.addEventListener('click', function(e) {
+        // Remove old event listeners by cloning
+        const newToggle = accessibilityToggle.cloneNode(true);
+        accessibilityToggle.parentNode.replaceChild(newToggle, accessibilityToggle);
+        
+        newToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             accessibilityMenu.classList.toggle('active');
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (!accessibilityMenu.contains(e.target) && !accessibilityToggle.contains(e.target)) {
+            if (!accessibilityMenu.contains(e.target) && !newToggle.contains(e.target)) {
                 accessibilityMenu.classList.remove('active');
             }
         });
@@ -26,9 +30,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
     
     if (mobileMenuToggle && navMenu) {
-        mobileMenuToggle.addEventListener('click', function() {
+        // Remove old event listeners by cloning
+        const newMobileToggle = mobileMenuToggle.cloneNode(true);
+        mobileMenuToggle.parentNode.replaceChild(newMobileToggle, mobileMenuToggle);
+        
+        newMobileToggle.addEventListener('click', function() {
             navMenu.classList.toggle('active');
-            mobileMenuToggle.classList.toggle('active');
+            newMobileToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                newMobileToggle.classList.remove('active');
+            });
         });
     }
 
@@ -45,7 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
                 const targetPosition = targetSection.offsetTop - navbarHeight;
                 
                 window.scrollTo({
@@ -55,6 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+}
+
+// Smooth scrolling for navigation links
+document.addEventListener('DOMContentLoaded', function() {
+    initializeScripts();
 
     // Add active state to navigation links on scroll
     const sections = document.querySelectorAll('section[id]');

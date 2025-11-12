@@ -32,7 +32,7 @@
 
         .blog-header p {
             font-size: 0.9rem;
-            color: #ccc;
+            color: var(--text-secondary);
             margin: 0;
         }
 
@@ -49,10 +49,10 @@
             width: 100%;
             padding: 0.75rem;
             font-size: 0.95rem;
-            border: 2px solid #4a90e2;
+            border: 2px solid var(--primary-color);
             border-radius: 8px;
-            background: #2a2a2a;
-            color: #ffffff;
+            background: var(--bg-secondary);
+            color: var(--text-color);
             margin-bottom: 0.75rem;
         }
 
@@ -65,18 +65,18 @@
 
         .tag-btn {
             padding: 0.5rem 1rem;
-            border: 2px solid #4a90e2;
+            border: 2px solid var(--primary-color);
             border-radius: 20px;
             background: transparent;
-            color: #4a90e2;
+            color: var(--primary-color);
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .tag-btn:hover,
         .tag-btn.active {
-            background: #4a90e2;
-            color: #fff;
+            background: var(--primary-color);
+            color: var(--bg-color);
         }
 
         .blog-grid {
@@ -87,7 +87,7 @@
         }
 
         .blog-card {
-            background: #2a2a2a;
+            background: var(--bg-secondary);
             border-radius: 12px;
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -105,7 +105,7 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            background: #1a1a1a;
+            background: var(--bg-tertiary);
         }
 
         .blog-card-content {
@@ -119,18 +119,18 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.875rem;
-            color: #888;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
         }
 
         .blog-card-title {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #4a90e2;
+            color: var(--primary-color);
         }
 
         .blog-card-description {
-            color: #ccc;
+            color: var(--text-secondary);
             margin-bottom: 1rem;
             flex: 1;
         }
@@ -143,8 +143,8 @@
         }
 
         .blog-card-tag {
-            background: #1a1a1a;
-            color: #4a90e2;
+            background: var(--bg-tertiary);
+            color: var(--primary-color);
             padding: 0.25rem 0.75rem;
             border-radius: 12px;
             font-size: 0.875rem;
@@ -189,6 +189,32 @@
                 <button class="accessibility-toggle" id="accessibilityToggle" title="Accessibility Options">
                     <span class="accessibility-icon">♿</span>
                 </button>
+                
+                <!-- Accessibility Menu -->
+                <div class="accessibility-menu" id="accessibilityMenu">
+                    <h3>Accessibility Options</h3>
+                    
+                    <div class="accessibility-section">
+                        <label>Text Size:</label>
+                        <div class="accessibility-buttons">
+                            <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
+                            <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
+                            <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
+                        </div>
+                    </div>
+                    
+                    <div class="accessibility-section">
+                        <label>Color Theme:</label>
+                        <div class="accessibility-buttons">
+                            <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
+                            <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
+                            <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
+                            <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
+                            <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <a href="index.html#home" class="nav-brand">Lior Yaari</a>
             </div>
             <ul class="nav-menu">
@@ -205,31 +231,6 @@
                 <span></span>
                 <span></span>
             </button>
-        </div>
-        
-        <!-- Accessibility Menu -->
-        <div class="accessibility-menu" id="accessibilityMenu">
-            <h3>Accessibility Options</h3>
-            
-            <div class="accessibility-section">
-                <label>Text Size:</label>
-                <div class="accessibility-buttons">
-                    <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
-                    <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
-                    <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
-                </div>
-            </div>
-            
-            <div class="accessibility-section">
-                <label>Color Theme:</label>
-                <div class="accessibility-buttons">
-                    <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
-                    <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
-                    <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
-                    <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
-                    <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
-                </div>
-            </div>
         </div>
     </nav>
 

@@ -54,7 +54,7 @@
         }
 
         .post-meta {
-            color: #888;
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
         }
@@ -67,8 +67,8 @@
         }
 
         .post-tag {
-            background: #2a2a2a;
-            color: #4a90e2;
+            background: var(--bg-secondary);
+            color: var(--primary-color);
             padding: 0.4rem 0.9rem;
             border-radius: 20px;
             font-size: 0.85rem;
@@ -76,18 +76,18 @@
 
         .post-content {
             line-height: 1.8;
-            color: #ccc;
+            color: var(--text-secondary);
         }
 
         .post-content h2 {
-            color: #4a90e2;
+            color: var(--primary-color);
             margin-top: 2.5rem;
             margin-bottom: 1rem;
             font-size: 1.6rem;
         }
 
         .post-content h3 {
-            color: #4a90e2;
+            color: var(--primary-color);
             margin-top: 2rem;
             margin-bottom: 0.75rem;
             font-size: 1.3rem;
@@ -98,19 +98,19 @@
         }
 
         .post-content code {
-            background: #2a2a2a;
+            background: var(--bg-secondary);
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
-            color: #50e3c2;
+            color: var(--primary-color);
         }
 
         .post-content pre {
-            background: #1a1a1a;
+            background: var(--bg-tertiary);
             padding: 1rem;
             border-radius: 8px;
             overflow-x: auto;
             margin: 1.5rem 0;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--bg-secondary);
         }
 
         .post-content pre code {
@@ -128,17 +128,17 @@
         }
 
         .post-content blockquote {
-            border-left: 4px solid #4a90e2;
+            border-left: 4px solid var(--primary-color);
             padding-left: 1rem;
             margin: 1.5rem 0;
-            color: #888;
+            color: var(--text-secondary);
             font-style: italic;
         }
 
         .back-link {
             display: inline-block;
             margin-bottom: 1.5rem;
-            color: #4a90e2;
+            color: var(--primary-color);
             text-decoration: none;
             font-size: 1rem;
             grid-column: 1;
@@ -181,6 +181,32 @@
                 <button class="accessibility-toggle" id="accessibilityToggle" title="Accessibility Options">
                     <span class="accessibility-icon">♿</span>
                 </button>
+                
+                <!-- Accessibility Menu -->
+                <div class="accessibility-menu" id="accessibilityMenu">
+                    <h3>Accessibility Options</h3>
+                    
+                    <div class="accessibility-section">
+                        <label>Text Size:</label>
+                        <div class="accessibility-buttons">
+                            <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
+                            <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
+                            <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
+                        </div>
+                    </div>
+                    
+                    <div class="accessibility-section">
+                        <label>Color Theme:</label>
+                        <div class="accessibility-buttons">
+                            <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
+                            <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
+                            <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
+                            <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
+                            <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <a href="../index.html#home" class="nav-brand">Lior Yaari</a>
             </div>
             <ul class="nav-menu">
@@ -197,31 +223,6 @@
                 <span></span>
                 <span></span>
             </button>
-        </div>
-        
-        <!-- Accessibility Menu -->
-        <div class="accessibility-menu" id="accessibilityMenu">
-            <h3>Accessibility Options</h3>
-            
-            <div class="accessibility-section">
-                <label>Text Size:</label>
-                <div class="accessibility-buttons">
-                    <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
-                    <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
-                    <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
-                </div>
-            </div>
-            
-            <div class="accessibility-section">
-                <label>Color Theme:</label>
-                <div class="accessibility-buttons">
-                    <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
-                    <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
-                    <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
-                    <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
-                    <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
-                </div>
-            </div>
         </div>
     </nav>
 
