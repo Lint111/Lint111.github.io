@@ -1,16 +1,26 @@
 // Blog posts data
 const blogPosts = [
     {
-        id: "getting-started-with-vulkan",
+        id: 1,
+        title: "VIXEN: From Learning Tool to Research Framework",
+        excerpt: "How I transformed a Vulkan learning project into a modular render graph framework for comparative research on voxel rendering pipelines. A journey from monolithic architecture to a flexible, node-based system.",
+        date: "2025-11-12",
+        author: "Lior Yaari",
+        tags: ["Vulkan", "Render Graph", "C++", "Game Engine", "Research", "Architecture"],
+        image: "https://via.placeholder.com/400x250/1a1a2e/4a90e2?text=VIXEN+Framework",
+        url: "blog-posts/vixen-learning-tool-to-research-framework.html",
+        readTime: "10 min read"
+    },
+    {
+        id: 2,
         title: "Getting Started with Vulkan: A Graphics Programmer's Journey",
-        description: "My experience learning Vulkan API and building a custom game engine from scratch. Covering the basics, common pitfalls, and key takeaways.",
+        excerpt: "Learning Vulkan has been one of the most challenging yet rewarding experiences in my game development journey. Unlike higher-level APIs like OpenGL or DirectX 11, Vulkan forces you to understand graphics programming at a much deeper level.",
         date: "2025-11-12",
         author: "Lior Yaari",
         tags: ["Vulkan", "Graphics Programming", "Game Engine", "C++"],
-        image: "https://via.placeholder.com/600x300/1a1a1a/4a90e2?text=Vulkan",
-        readTime: "8 min read",
-        featured: true,
-        content: "blog-posts/getting-started-with-vulkan.html"
+        image: "https://via.placeholder.com/400x250/1a1a2e/4a90e2?text=Vulkan+Graphics",
+        url: "blog-posts/getting-started-with-vulkan.html",
+        readTime: "8 min read"
     }
 ];
 

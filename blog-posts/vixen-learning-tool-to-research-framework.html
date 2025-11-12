@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIXEN: From Learning Tool to Research Framework - Lior Yaari</title>
+    <meta name="description" content="How I transformed a Vulkan learning project into a modular render graph framework for comparative research on voxel rendering pipelines.">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Reduce section padding for blog post */
+        section.section {
+            padding: 1rem 0 4rem 0;
+        }
+
+        .post-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            align-items: start;
+            padding: 0 2rem;
+        }
+
+        /* Side areas for future content */
+        .post-container::before,
+        .post-container::after {
+            content: '';
+        }
+
+        /* Main reading area with darker background */
+        .post-content-wrapper {
+            background: radial-gradient(
+                ellipse 120% 100% at 50% 50%,
+                rgba(20, 30, 45, 0.8) 0%,
+                rgba(20, 30, 45, 0.8) 70%,
+                rgba(20, 30, 45, 0.5) 85%,
+                rgba(20, 30, 45, 0) 100%
+            );
+            padding: 2.5rem 4rem;
+            border-radius: 8px;
+            grid-column: 1;
+            max-width: 1100px;
+            margin-left: 0;
+        }
+
+        .post-header {
+            margin-bottom: 2rem;
+        }
+
+        .post-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta {
+            color: #888;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .post-tag {
+            background: #2a2a2a;
+            color: #4a90e2;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .post-content h2 {
+            color: #4a90e2;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+        }
+
+        .post-content h3 {
+            color: #4a90e2;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .post-content code {
+            background: #2a2a2a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #50e3c2;
+        }
+
+        .post-content pre {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #2a2a2a;
+        }
+
+        .post-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .post-content ul, .post-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-content blockquote {
+            border-left: 4px solid #4a90e2;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #888;
+            font-style: italic;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 1rem;
+            grid-column: 1;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .post-content-wrapper {
+                padding: 2rem 3rem;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .post-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .post-content-wrapper {
+                padding: 1.5rem 2rem;
+                grid-column: 1;
+            }
+
+            .back-link {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <button class="accessibility-toggle" id="accessibilityToggle" title="Accessibility Options">
+                    <span class="accessibility-icon">♿</span>
+                </button>
+                <a href="../index.html#home" class="nav-brand">Lior Yaari</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html#about" class="nav-link">About</a></li>
+                <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="../blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="../index.html#education" class="nav-link">Education</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="../lior-yaari-resume.pdf" class="nav-link resume-btn" download>Resume</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        
+        <!-- Accessibility Menu -->
+        <div class="accessibility-menu" id="accessibilityMenu">
+            <h3>Accessibility Options</h3>
+            
+            <div class="accessibility-section">
+                <label>Text Size:</label>
+                <div class="accessibility-buttons">
+                    <button class="text-size-btn" data-size="small" onclick="setTextSize('small')">A</button>
+                    <button class="text-size-btn" data-size="normal" onclick="setTextSize('normal')">A</button>
+                    <button class="text-size-btn" data-size="large" onclick="setTextSize('large')">A</button>
+                </div>
+            </div>
+            
+            <div class="accessibility-section">
+                <label>Color Theme:</label>
+                <div class="accessibility-buttons">
+                    <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
+                    <button class="theme-btn" data-theme="high-contrast" onclick="setTheme('high-contrast')">High Contrast</button>
+                    <button class="theme-btn" data-theme="deuteranopia" onclick="setTheme('deuteranopia')">Deuteranopia</button>
+                    <button class="theme-btn" data-theme="protanopia" onclick="setTheme('protanopia')">Protanopia</button>
+                    <button class="theme-btn" data-theme="tritanopia" onclick="setTheme('tritanopia')">Tritanopia</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Section -->
+    <section class="section">
+        <div class="container post-container">
+        <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+        <div class="post-content-wrapper">
+        <article>
+            <header class="post-header">
+                <h1 class="post-title">VIXEN: From Learning Tool to Research Framework</h1>
+                <div class="post-meta">
+                    By Lior Yaari • November 12, 2025 • 10 min read
+                </div>
+                <div class="post-tags">
+                    <span class="post-tag">Vulkan</span>
+                    <span class="post-tag">Render Graph</span>
+                    <span class="post-tag">C++</span>
+                    <span class="post-tag">Game Engine</span>
+                    <span class="post-tag">Research</span>
+                    <span class="post-tag">Architecture</span>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <h2>Preface</h2>
+                <p>
+                    I started studying Vulkan out of personal interest. I've always wanted to create a voxel engine, but in the past, I would research endlessly without actually building anything. This time, I decided things would be different.
+                </p>
+
+                <p>
+                    I began during summer break by following the book "Learning Vulkan" by Parminder Singh—a great introduction to Vulkan, even if it takes 400+ pages just to render a cube. The verbosity of Vulkan is intimidating at first, but it forces you to understand exactly what's happening at every step of the rendering pipeline.
+                </p>
+
+                <p>
+                    When I finished the book, I had a basic monolithic Vulkan renderer that did its job well. However, whenever I wanted to change what it was doing, I had to modify a lot of code inside already-finished classes, making it hard to extend and maintain. This is when I realized I needed a better architecture.
+                </p>
+
+                <h2>The Refactoring Journey</h2>
+
+                <p>
+                    So I started refactoring the monolithic structure into a more modular one—a graph-based format where every node represents a single focused task in the long chain of rendering a frame. This approach is inspired by modern render graph architectures used in AAA game engines, where the rendering process is broken down into discrete, composable operations.
+                </p>
+
+                <p>
+                    I began by working towards feature parity with the monolithic renderer, implementing nodes for swapchain creation, window creation, command buffer recording, render pass creation, pipeline creation, and so on. Each node would be responsible for one specific task and nothing more.
+                </p>
+
+                <h3>The Node Configuration Architecture</h3>
+
+                <p>
+                    After many refactors and iterations, I reached this structure:
+                </p>
+
+                <p>
+                    For each node, there exists a config header whose job is to create the structure of that node's data flow:
+                </p>
+
+                <ul>
+                    <li>Input and Output Slots</li>
+                    <li>Each slot's name and type</li>
+                    <li>Slot metadata such as optional/nullable status, Role (dependency, execute time, output), and access type (read, write, read-write), etc.</li>
+                    <li>Binding data that connects said name to the slot indexes</li>
+                    <li>Parameter names</li>
+                    <li>Static checks to verify the structure is correct at compile time</li>
+                </ul>
+
+                <p>
+                    Through the use of macros, these configs become true header files that go through preprocessing, which greatly improves the ergonomics of creating config files. Instead of writing hundreds of lines of boilerplate, the macros expand to generate all the necessary type definitions, binding structures, and validation code automatically.
+                </p>
+
+                <p>
+                    Here's a simplified example of a SwapChain node configuration:
+                </p>
+
+<pre><code>// Define the structure at compile time
+CONSTEXPR_NODE_CONFIG(SwapChainNodeConfig, 6, 2, SlotArrayMode::Single) {
+    // Input slots with metadata
+    INPUT_SLOT(INSTANCE, VkInstance, 0,
+        SlotNullability::Required,
+        SlotRole::Dependency,
+        SlotMutability::ReadOnly);
+    
+    INPUT_SLOT(DEVICE, VulkanDevicePtr, 1,
+        SlotNullability::Required,
+        SlotRole::Dependency,
+        SlotMutability::ReadOnly);
+    
+    INPUT_SLOT(WIDTH, uint32_t, 2,
+        SlotNullability::Required,
+        SlotRole::Dependency,
+        SlotMutability::ReadOnly);
+    
+    // ... more inputs
+    
+    // Output slots
+    OUTPUT_SLOT(SWAPCHAIN_HANDLE, VkSwapchainKHR, 0,
+        SlotNullability::Required,
+        SlotMutability::WriteOnly);
+    
+    OUTPUT_SLOT(IMAGE_INDEX, uint32_t, 1,
+        SlotNullability::Required,
+        SlotMutability::WriteOnly);
+    
+    // Compile-time validations
+    static_assert(INPUT_COUNT == 6, "Input count mismatch");
+    static_assert(OUTPUT_COUNT == 2, "Output count mismatch");
+    static_assert(std::is_same_v&lt;INSTANCE_Slot::Type, VkInstance&gt;);
+    static_assert(!INSTANCE_Slot::nullable, "INSTANCE is required");
+};</code></pre>
+
+                <p>
+                    By predefining the structure of each node at compile time, we get compile-time type safety, clear data flow, and a well-defined interface of operations.
+                </p>
+
+                <p>
+                    Then we have the actual node implementation, whose job is to implement the logic of the node using the data flow structure.
+                </p>
+
+                <h3>The Power of DAG-Based Rendering</h3>
+
+                <p>
+                    By constructing a graph of these nodes, we can build a DAG (Directed Acyclic Graph) of rendering operations, where each node can be independently developed, tested, and maintained.
+                </p>
+
+                <p>
+                    For example, by checking slot connections at graph compile time (not actual C++ compile time, but during the graph assembly process), we create an execution order for the nodes according to connections between them—inputs must happen before the outputs that depend on them.
+                </p>
+
+                <p>
+                    By using the slot Role metadata, we can determine which nodes are dependencies of other nodes, allowing us to create a cleanup graph that is the reverse of the execution graph. This enables us to properly destroy only the dependent resources in the correct order, preventing memory leaks and validation errors.
+                </p>
+
+                <h2>From Learning to Research</h2>
+
+                <p>
+                    When I reached feature parity with the monolithic renderer, I had already invested significant time into this new structure. So I decided to transition from a learning project into a tool for my graduation research project.
+                </p>
+
+                <p>
+                    Using the modular structure and the ability to simply switch nodes to compare different render pipeline configurations, I can conduct a comparative study of how different Vulkan rendering pipelines affect the performance of similar rendering tasks.
+                </p>
+
+                <p>
+                    Specifically, my research focuses on comparing how different Vulkan pipeline implementations of the same voxel rendering technique perform. I'm investigating compute pipelines, graphics pipelines (running the algorithm in the fragment shader), ray tracing (RTX), mesh shaders, and other approaches. This comparative study will help understand the performance characteristics and capabilities of each pipeline type when applied to voxel rendering in the same environment.
+                </p>
+
+                <p>
+                    So I assembled a project plan and got to work. With every new step toward my research goals, new architectural needs arose.
+                </p>
+
+                <h2>Shader Management</h2>
+
+                <p>
+                    A good rendering framework enables quick iteration of shaders. This requires ease of loading, compiling, resource gathering, descriptor creation, and binding. With every step, it became clear that a manual approach wasn't feasible for a proper development environment.
+                </p>
+
+                <p>
+                    So I created a static library focused on shader handling with the following responsibilities:
+                </p>
+
+                <ul>
+                    <li>Loading shader source code from files</li>
+                    <li>Compiling shaders into SPIR-V format</li>
+                    <li>Reflecting shader resources to gather information about inputs, outputs, uniforms, and other resources</li>
+                    <li>Creating SDIs (Shader Descriptor Interfaces) and a naming file that maps resource names to binding points</li>
+                    <li>Assembling shader data bundles and passing them to a consumer, such as a render node</li>
+                </ul>
+
+                <p>
+                    I kept actual Vulkan API calls out of this library to keep it modular and focused on shader management, enabling easier testing and potential reuse in other projects.
+                </p>
+
+                <p>
+                    So now I have automatic shader metadata, but we still need to create shader modules, descriptor sets, and pipeline layouts, gather resources, and bind them at draw time. And all of this process needs to be generic enough to handle any kind of shader we can throw at it.
+                </p>
+
+                <h3>The Variadic Node Problem</h3>
+
+                <p>
+                    This led me to a new problem: how do we handle a node with an unknown number of slots at compile time?
+                </p>
+
+                <p>
+                    I decided to implement a variadic design—a node that "trusts the user" to connect an arbitrary number of slots and will throw errors at runtime if something is wrong (in our case, "compile time" refers to the early graph assembly stage). This way, we can have a generic shader node that can handle any shader configuration.
+                </p>
+
+                <p>
+                    But this led to another issue: graph flow.
+                </p>
+
+                <h3>The Two-Pass Solution</h3>
+
+                <p>
+                    At the time, the render graph construction flow looked like this:
+                </p>
+
+                <ul>
+                    <li>Node 1 setup</li>
+                    <li>Node 1 compile</li>
+                    <li>Node 2 setup</li>
+                    <li>Node 2 compile</li>
+                    <li>...</li>
+                    <li>Node n setup</li>
+                    <li>Node n compile</li>
+                </ul>
+
+                <p>
+                    As a result, we couldn't know for sure if any prior slots were already populated before compiling a node, leading to issues where we'd assume a variadic slot was populated when it wasn't.
+                </p>
+
+                <p>
+                    To solve this issue, I had to refactor the graph assembly flow into two distinct passes:
+                </p>
+
+                <ul>
+                    <li><strong>Setup Pass</strong>: All nodes are set up, slots are connected, and data flow is established</li>
+                    <li><strong>Compile Pass</strong>: All nodes are compiled, now with the guarantee that all prior slots are populated and ready for use</li>
+                </ul>
+
+                <p>
+                    Additionally, I added event hooks for different stages of the graph assembly lifecycle, enabling easy access to different stages of the process for logging, debugging, and custom operations. On the node side, I added event hooks before and after each lifecycle stage, enabling fine-grained control over node operations.
+                </p>
+
+                <p>
+                    So every time we reach a node's precompile hook, we know that its dependencies are already compiled and ready for use. We can populate our variadic slots with actual data from prior nodes, making them accessible in the compile stage.
+                </p>
+
+                <h2>Generic Compute Shader Handling</h2>
+
+                <p>
+                    This new structure allowed me to create a generic "Descriptor Resource Gatherer" node that, according to a shader data bundle, can accept any number of resources needed for binding and create the needed descriptor sets and layouts for binding at draw time—while keeping type safety and clear data flow.
+                </p>
+
+                <p>
+                    After I finished implementing this new structure, I reached the first milestone of truly generic compute shader handling. I can now swap between different compute shaders with different resource needs just by changing node connections, without modifying any node code.
+                </p>
+
+                <h2>Next Steps</h2>
+
+                <p>
+                    Next steps include implementing a generic graphics pipeline node that can handle any vertex/fragment shader pair, along with other pipeline implementations to complete the testing suite required for my research project.
+                </p>
+
+                <p>
+                    Once I have all pipeline types implemented, I'll be able to run my comparative analysis, measuring performance metrics like frame time, GPU utilization, memory usage, and rendering quality across different pipeline approaches for the same voxel rendering technique.
+                </p>
+
+                <h2>Conclusion</h2>
+
+                <p>
+                    In conclusion, creating a render graph framework is an architectural challenge that's teaching me a lot about modular design, data flow management, and Vulkan rendering pipelines. The journey from a monolithic learning project to a flexible research tool has been full of design challenges and rewarding solutions.
+                </p>
+
+                <p>
+                    I'm looking forward to continuing this journey and seeing where it leads me in my research and on the path toward a functional voxel engine. The ability to rapidly prototype and compare different rendering approaches is exactly what I needed, and the architecture is flexible enough to accommodate future research directions.
+                </p>
+
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid #444;">
+
+                <p style="text-align: center; color: #888;">
+                    <em>Have questions about render graphs, Vulkan, or game engine architecture? Feel free to reach out!</em>
+                </p>
+            </div>
+        </article>
+        </div>
+
+        <a href="../blog.html" class="back-link" style="margin-top: 2rem;">← Back to Blog</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Lior Yaari. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com/Lint111" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://lint111.itch.io/" target="_blank" rel="noopener noreferrer" aria-label="Itch.io">
+                    <svg width="24" height="24" viewBox="0 0 245.371 220.736" fill="currentColor">
+                        <path d="M31.99 1.365C21.287 7.72.2 31.945 0 38.298v10.516C0 62.144 12.46 73.86 23.773 73.86c13.584 0 24.902-11.258 24.903-24.62 0 13.362 10.93 24.62 24.515 24.62 13.586 0 24.165-11.258 24.165-24.62 0 13.362 11.622 24.62 25.207 24.62h.246c13.586 0 25.208-11.258 25.208-24.62 0 13.362 10.58 24.62 24.164 24.62 13.585 0 24.515-11.258 24.515-24.62 0 13.362 11.32 24.62 24.903 24.62 11.313 0 23.773-11.714 23.773-25.046V38.298c-.2-6.354-21.287-30.58-31.988-36.933C180.118.197 157.056-.005 122.685 0c-34.37.003-81.228.54-90.697 1.365zm65.194 66.217a28.025 28.025 0 0 1-4.78 6.155c-5.128 5.014-12.157 8.122-19.906 8.122a28.482 28.482 0 0 1-19.948-8.126c-1.858-1.82-3.27-3.766-4.563-6.032l-.006.004c-1.292 2.27-3.092 4.215-4.954 6.037a28.5 28.5 0 0 1-19.948 8.12c-.934 0-1.906-.258-2.692-.528-1.092 11.372-1.553 22.24-1.716 30.164l-.002.045c-.02 4.024-.04 7.333-.06 11.93.21 23.86-2.363 77.334 10.52 90.473 19.964 4.655 56.7 6.775 93.555 6.788h.006c36.854-.013 73.59-2.133 93.554-6.788 12.883-13.14 10.31-66.614 10.52-90.474-.022-4.596-.04-7.905-.06-11.93l-.003-.045c-.162-7.926-.623-18.793-1.715-30.165-.786.27-1.757.528-2.692.528a28.5 28.5 0 0 1-19.948-8.12c-1.862-1.822-3.662-3.766-4.955-6.037l-.006-.004c-1.294 2.266-2.705 4.213-4.563 6.032a28.48 28.48 0 0 1-19.947 8.125c-7.748 0-14.778-3.11-19.906-8.123a28.025 28.025 0 0 1-4.78-6.155 27.99 27.99 0 0 1-4.736 6.155 28.49 28.49 0 0 1-19.95 8.124c-.27 0-.54-.012-.81-.02h-.007c-.27.008-.54.02-.813.02a28.49 28.49 0 0 1-19.95-8.123 27.992 27.992 0 0 1-4.736-6.155zm-20.486 26.49l-.002.01h.015c8.113.017 15.32 0 24.25 9.746 7.028-.737 14.372-1.105 21.722-1.094h.006c7.35-.01 14.694.357 21.723 1.094 8.93-9.747 16.137-9.73 24.25-9.746h.014l-.002-.01c3.833 0 19.166 0 29.85 30.007L210 165.244c8.504 30.624-2.723 31.373-16.727 31.4-20.768-.773-32.267-15.855-32.267-30.935-11.496 1.884-24.907 2.826-38.318 2.827h-.006c-13.412 0-26.823-.943-38.318-2.827 0 15.08-11.5 30.162-32.267 30.935-14.004-.027-25.23-.775-16.726-31.4L46.85 124.08C57.534 94.073 72.867 94.073 76.7 94.073zm45.985 23.582v.006c-.02.02-21.863 20.08-25.79 27.215l14.304-.573v12.474c0 .584 5.74.346 11.486.08h.006c5.744.266 11.485.504 11.485-.08v-12.474l14.304.573c-3.928-7.135-25.79-27.215-25.79-27.215v-.006l-.003.002z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/lior-yaari-671629265/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
