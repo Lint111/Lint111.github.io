@@ -1,5 +1,37 @@
 // Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
+    // Load accessibility preferences
+    loadPreferences();
+
+    // Accessibility menu toggle
+    const accessibilityToggle = document.getElementById('accessibilityToggle');
+    const accessibilityMenu = document.getElementById('accessibilityMenu');
+    
+    if (accessibilityToggle && accessibilityMenu) {
+        accessibilityToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            accessibilityMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!accessibilityMenu.contains(e.target) && !accessibilityToggle.contains(e.target)) {
+                accessibilityMenu.classList.remove('active');
+            }
+        });
+    }
+
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileMenuToggle && navMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+        });
+    }
+
     // Smooth scroll for all anchor links
     const navLinks = document.querySelectorAll('a[href^="#"]');
     
@@ -104,3 +136,62 @@ function updateYear() {
 
 // Call updateYear when DOM is loaded
 document.addEventListener('DOMContentLoaded', updateYear);
+
+// Accessibility Functions
+
+// Load saved preferences
+function loadPreferences() {
+    const savedTextSize = localStorage.getItem('textSize') || 'normal';
+    const savedTheme = localStorage.getItem('colorTheme') || 'default';
+    
+    setTextSize(savedTextSize);
+    setTheme(savedTheme);
+}
+
+// Set Text Size
+function setTextSize(size) {
+    const html = document.documentElement;
+    
+    // Remove all text size classes
+    html.classList.remove('text-small', 'text-large');
+    
+    // Add the selected size class (unless it's normal)
+    if (size === 'small') {
+        html.classList.add('text-small');
+    } else if (size === 'large') {
+        html.classList.add('text-large');
+    }
+    
+    // Update active state on buttons
+    document.querySelectorAll('.text-size-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.size === size) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Save preference
+    localStorage.setItem('textSize', size);
+}
+
+// Set Color Theme
+function setTheme(theme) {
+    // Remove all theme classes
+    document.body.classList.remove('theme-high-contrast', 'theme-deuteranopia', 'theme-protanopia', 'theme-tritanopia');
+    
+    // Add the selected theme class (unless it's default)
+    if (theme !== 'default') {
+        document.body.classList.add(`theme-${theme}`);
+    }
+    
+    // Update active state on buttons
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.theme === theme) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Save preference
+    localStorage.setItem('colorTheme', theme);
+}
